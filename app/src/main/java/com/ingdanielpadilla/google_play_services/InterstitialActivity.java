@@ -7,8 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 public class InterstitialActivity extends AppCompatActivity {
     private Button mShowButton;
+    private InterstitialAd mInterstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +25,37 @@ public class InterstitialActivity extends AppCompatActivity {
     public void loadInterstitial(View unusedView){
         mShowButton.setEnabled(false);
         mShowButton.setText(getResources().getString(R.string.interstitial_loading));
+
+        mInterstitial = new InterstitialAd(this);
+        mInterstitial.setAdUnitId(getResources().getString(R.string.interstitial_ad_unit_id));
+        mInterstitial.setAdListener(new ToastAdListener(this) {
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mShowButton.setText("Show Intestitial");
+                mShowButton.setEnabled(true);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                mShowButton.setText(getErrorReason());
+            }
+        });
+
+        AdRequest ar= new AdRequest.Builder().build();
+        mInterstitial.loadAd(ar);
+
     }
-public void showIntestitial(View unusedView){}
+public void showIntestitial(View unusedView){
+    if(mInterstitial.isLoaded()){
+        mInterstitial.show();
+    }
+
+    mShowButton.setText("Interstitial Not Ready");
+    mShowButton.setEnabled(false);
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
