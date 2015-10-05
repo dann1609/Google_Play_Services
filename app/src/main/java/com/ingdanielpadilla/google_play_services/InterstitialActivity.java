@@ -2,33 +2,31 @@ package com.ingdanielpadilla.google_play_services;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
-public class BannerActivity extends AppCompatActivity {
-    private AdView mAdView;
+public class InterstitialActivity extends AppCompatActivity {
+    private Button mShowButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banner);
+        setContentView(R.layout.activity_interstitial);
 
-        Log.d("desarrollo", "hola");
-
-        mAdView=(AdView) findViewById(R.id.adView);
-        mAdView.setAdListener(new ToastAdListener(this));
-        AdRequest adRequest= new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mShowButton=(Button) findViewById(R.id.showButton);
+        mShowButton.setEnabled(false);
     }
-
+    public void loadInterstitial(View unusedView){
+        mShowButton.setEnabled(false);
+        mShowButton.setText(getResources().getString(R.string.interstitial_loading));
+    }
+public void showIntestitial(View unusedView){}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_banner, menu);
+        getMenuInflater().inflate(R.menu.menu_interstitial, menu);
         return true;
     }
 

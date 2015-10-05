@@ -29,6 +29,10 @@
             android:name=".BannerActivity"
             android:label="@string/title_activity_banner" >
         </activity>
+        <activity
+            android:name=".InterstitialActivity"
+            android:label="@string/title_activity_interstitial" >
+        </activity>
     </application>
 
 </manifest>
